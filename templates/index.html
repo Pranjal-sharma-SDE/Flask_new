@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Calculator</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background-color: black;
+    }
+  </style>
+</head>
+<body class="flex flex-col items-center min-h-screen">
+
+  <header class="bg-gray-900 text-white py-4 w-full">
+    <h1 class="text-3xl text-center">Calculator</h1>
+  </header>
+
+  <div class="mt-8">
+   
+
+    <div class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl lg:max-w-6xl">
+      <div class="md:flex flex-col md:flex-row">
+        <div class="md:shrink-0">
+          <img class="h-48 w-full object-cover md:h-full md:w-48" src="https://img.freepik.com/premium-photo/robot-with-purple-glasses-calculator_579873-7508.jpg" alt="Modern building architecture">
+        </div>
+
+        <div class="p-8 w-full">
+          <div class="uppercase tracking-wide text-sm text-indigo-500 font-semibold">Calculator</div>
+          <form id="calculatorForm" class="flex flex-col items-center justify-center">
+            <input type="text" name="number1" placeholder="Number 1" class="px-4 py-2 border border-gray-300 rounded-lg mb-4 md:mb-0 md:mr-4">
+            <input type="text" name="number2" placeholder="Number 2" class="px-4 py-2 border border-gray-300 rounded-lg mb-4 md:mb-0 md:mr-4">
+            <select name="operation" class="px-4 py-2 border border-gray-300 rounded-lg mb-4 md:mb-0 md:mr-4">
+              <option value="add">Add</option>
+              <option value="subtract">Subtract</option>
+              <option value="multiply">Multiply</option>
+              <option value="divide">Divide</option>
+            </select>
+            <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-lg md:w-auto">Calculate</button>
+          </form>
+
+          <div id="result" class="text-center mt-4 text-xl font-semibold"></div>
+        </div>
+      </div>
+    </div>
+    <!-- Calculator -->
+  </div>
+
+  <img src="https://res.cloudinary.com/dqhyudo4x/image/upload/v1689922927/Portfolio/feature-bg_lw1el9.png" alt="bg" class="lg:h-[400px] w-screen h-64 mt-8" />
+
+  <footer class="bg-gray-900 text-white py-4 w-full mt-8">
+    <ul class="flex justify-center">
+      <li>
+        <h1 class="text-lg">© 2023 Pranjal Sharma</h1>
+      </li>
+    </ul>
+  </footer>
+
+  <script>
+    document.getElementById('calculatorForm').addEventListener('submit', function(event) {
+      event.preventDefault(); // Prevent the default form submission
+
+      // Create a JSON object from the form data
+      const form = document.getElementById('calculatorForm');
+      const formData = new FormData(form);
+      const jsonData = {};
+
+      for (const [key, value] of formData.entries()) {
+        jsonData[key] = value;
+      }
+
+      // Send the JSON data to the server
+      fetch('/calculate', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(jsonData)
+      })
+        .then(response => response.json())
+        .then(data => {
+          // Handle the response from the server
+          const resultElement = document.getElementById('result');
+          resultElement.innerText = `Result: ${data.result}`;
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    });
+  </script>
+</body>
+</html>
