@@ -5,6 +5,8 @@
 ## Introduction
 
 This is a simple calculator web application built with Flask as the backend framework. It provides basic arithmetic operations to perform calculations. Users can enter mathematical expressions in the input field and get the result displayed on the page.
+![Calculator Preview](images/WhatsApp Image 2023-07-31 at 12.23.55.jpg)
+
 
 ## Features
 
